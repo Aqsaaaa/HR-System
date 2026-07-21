@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\PayrollController;
 use App\Http\Controllers\Web\PerformanceController as WebPerformanceController;
 use App\Http\Controllers\Web\RecruitmentController;
 use App\Http\Controllers\Web\ReportController as WebReportController;
+use App\Http\Controllers\Web\SettingsController as WebSettingsController;
 use App\Models\Department;
 use App\Models\Position;
 use App\Services\Employee\EmployeeService;
@@ -85,9 +86,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/announcements/{id}/pin', [WebAnnouncementController::class, 'togglePin'])->name('announcements.pin');
 
     // Settings routes
-    Route::get('/settings', function () {
-        return Inertia::render('Settings/Index');
-    })->name('settings.index');
+    Route::get('/settings', [WebSettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/company', [WebSettingsController::class, 'updateCompany'])->name('settings.company.update');
+    Route::post('/settings/general', [WebSettingsController::class, 'updateGeneral'])->name('settings.general.update');
 
     // Reports routes
     Route::get('/reports', [WebReportController::class, 'index'])->name('reports.index');
