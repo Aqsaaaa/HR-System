@@ -81,4 +81,14 @@ class Employee extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

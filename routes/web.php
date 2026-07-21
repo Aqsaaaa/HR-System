@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Models\Department;
 use App\Models\Position;
@@ -50,9 +51,7 @@ Route::middleware('auth')->group(function () {
     })->name('positions.index');
 
     // Attendance routes
-    Route::get('/attendance', function () {
-        return Inertia::render('Attendance/Index');
-    })->name('attendance.index');
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
 
     // Leave routes
     Route::get('/leave', function () {
