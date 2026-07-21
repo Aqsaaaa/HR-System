@@ -106,8 +106,8 @@ Route::name('api.')->prefix('v1')->group(function () {
         Route::apiResource('performance/goals', App\Http\Controllers\Api\V1\GoalController::class);
 
         // Announcement
-        Route::post('announcements/{id}/pin', [App\Http\Controllers\Api\V1\AnnouncementController::class, 'togglePin']);
-        Route::post('announcements/{id}/read', [App\Http\Controllers\Api\V1\AnnouncementController::class, 'markAsRead']);
+        Route::post('announcements/{id}/pin', [App\Http\Controllers\Api\V1\AnnouncementController::class, 'togglePin'])->name('announcements.pin');
+        Route::post('announcements/{id}/read', [App\Http\Controllers\Api\V1\AnnouncementController::class, 'markAsRead'])->name('announcements.read');
         Route::apiResource('announcements', App\Http\Controllers\Api\V1\AnnouncementController::class);
 
         // Notification

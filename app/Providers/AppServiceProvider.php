@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\AnnouncementRepositoryInterface;
 use App\Repositories\Contracts\AttendanceRepositoryInterface;
 use App\Repositories\Contracts\CandidateRepositoryInterface;
 use App\Repositories\Contracts\DepartmentRepositoryInterface;
@@ -16,6 +17,7 @@ use App\Repositories\Contracts\PerformanceCycleRepositoryInterface;
 use App\Repositories\Contracts\PerformanceReviewRepositoryInterface;
 use App\Repositories\Contracts\PositionRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface;
+use App\Repositories\AnnouncementRepository;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\BaseRepository;
 use App\Repositories\CandidateRepository;
@@ -50,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PerformanceCycleRepositoryInterface::class, PerformanceCycleRepository::class);
         $this->app->bind(GoalRepositoryInterface::class, GoalRepository::class);
         $this->app->bind(PerformanceReviewRepositoryInterface::class, PerformanceReviewRepository::class);
+        $this->app->bind(AnnouncementRepositoryInterface::class, AnnouncementRepository::class);
     }
 
     public function boot(): void
