@@ -27,7 +27,7 @@ class PayrollSeeder extends Seeder
             PayrollComponent::create($data);
         }
 
-        $now = now()->startOfMonth();
+        $now = Carbon::parse('2000-08-01');
         $employees = Employee::all();
 
         $run = PayrollRun::create([

@@ -13,10 +13,11 @@ class AttendanceSeeder extends Seeder
     public function run(): void
     {
         $employees = Employee::all();
+        $baseDate = Carbon::parse('2000-08-01');
 
         foreach ($employees as $employee) {
-            for ($day = 1; $day <= now()->day; $day++) {
-                $date = now()->startOfMonth()->addDays($day - 1);
+            for ($day = 1; $day <= 20; $day++) {
+                $date = $baseDate->copy()->addDays($day - 1);
 
                 if ($date->isWeekend()) {
                     continue;
@@ -43,7 +44,7 @@ class AttendanceSeeder extends Seeder
         }
 
         // Create holidays
-        $year = now()->year;
+        $year = 2000;
         $holidays = [
             ['name' => 'New Year', 'date' => "{$year}-01-01", 'type' => 'national', 'is_recurring' => true],
             ['name' => 'Independence Day', 'date' => "{$year}-08-17", 'type' => 'national', 'is_recurring' => true],

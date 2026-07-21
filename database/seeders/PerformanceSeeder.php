@@ -14,9 +14,9 @@ class PerformanceSeeder extends Seeder
     public function run(): void
     {
         $cycle = PerformanceCycle::create([
-            'name' => 'Q3 2026 Performance Review',
-            'start_date' => Carbon::now()->startOfQuarter(),
-            'end_date' => Carbon::now()->endOfQuarter(),
+            'name' => 'Q3 2000 Performance Review',
+            'start_date' => Carbon::parse('2000-07-01'),
+            'end_date' => Carbon::parse('2000-09-30'),
             'status' => 'active',
             'description' => 'Quarterly performance review for all employees.',
             'created_by' => 1,
@@ -48,8 +48,8 @@ class PerformanceSeeder extends Seeder
                     'strengths' => 'Strong technical skills, good teamwork.',
                     'improvements' => 'Could improve documentation.',
                     'status' => 'completed',
-                    'submitted_at' => Carbon::now()->subDays(rand(1, 10)),
-                    'completed_at' => Carbon::now()->subDays(rand(0, 5)),
+                    'submitted_at' => Carbon::parse('2000-08-10'),
+                    'completed_at' => Carbon::parse('2000-08-15'),
                     'created_by' => 1,
                 ]);
             }

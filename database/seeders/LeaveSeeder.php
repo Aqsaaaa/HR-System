@@ -41,7 +41,7 @@ class LeaveSeeder extends Seeder
                 LeaveBalance::create([
                     'employee_id' => $employee->id,
                     'leave_type_id' => $type->id,
-                    'year' => now()->year,
+                    'year' => 2000,
                     'total_days' => $type->days_per_year,
                     'used_days' => 0,
                     'pending_days' => 0,
@@ -53,11 +53,12 @@ class LeaveSeeder extends Seeder
 
         $annual = $types->firstWhere('code', 'ANNUAL');
         $sick = $types->firstWhere('code', 'SICK');
+        $baseDate = Carbon::parse('2000-08-01');
 
         foreach ($employees->take(5) as $employee) {
-            $start = now()->startOfMonth()->addDays(5);
+            $start = $baseDate->copy()->addDays(5);
             LeaveRequest::create([
-                'leave_request_no' => 'LV-' . now()->format('Ymd') . '-' . str_pad((string) rand(1, 999), 4, '0', STR_PAD_LEFT),
+                'leave_request_no' => 'LV-200008' . '-' . str_pad((string) rand(1, 999), 4, '0', STR_PAD_LEFT),
                 'employee_id' => $employee->id,
                 'leave_type_id' => $annual->id,
                 'start_date' => $start->format('Y-m-d'),
@@ -65,7 +66,7 @@ class LeaveSeeder extends Seeder
                 'total_days' => 3,
                 'status' => 'approved',
                 'reason' => 'Annual vacation',
-                'applied_on' => now()->subDays(7)->format('Y-m-d'),
+                'applied_on' => '2000-07-25',
                 'created_by' => 1,
             ]);
 

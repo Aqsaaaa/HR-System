@@ -25,7 +25,7 @@ class RecruitmentSeeder extends Seeder
                 'type' => 'full_time',
                 'status' => 'published',
                 'slots' => 2,
-                'posted_at' => Carbon::now()->subDays(5),
+                'posted_at' => Carbon::parse('2000-07-27'),
             ],
             [
                 'position_id' => 3,
@@ -39,7 +39,7 @@ class RecruitmentSeeder extends Seeder
                 'type' => 'full_time',
                 'status' => 'published',
                 'slots' => 1,
-                'posted_at' => Carbon::now()->subDays(3),
+                'posted_at' => Carbon::parse('2000-07-29'),
             ],
             [
                 'position_id' => 5,
@@ -53,7 +53,7 @@ class RecruitmentSeeder extends Seeder
                 'type' => 'internship',
                 'status' => 'published',
                 'slots' => 3,
-                'posted_at' => Carbon::now()->subDays(1),
+                'posted_at' => Carbon::parse('2000-07-31'),
             ],
         ];
 
@@ -87,7 +87,7 @@ class RecruitmentSeeder extends Seeder
                 'candidate_id' => $candidate->id,
                 'stage' => $stages[$i],
                 'status' => 'active',
-                'applied_at' => Carbon::now()->subDays(rand(1, 10)),
+                'applied_at' => Carbon::parse('2000-08-0' . (($i % 9) + 1)),
                 'created_by' => 1,
             ]);
         }

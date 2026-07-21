@@ -17,7 +17,7 @@ class AnnouncementSeeder extends Seeder
                 'type' => 'achievement',
                 'is_pinned' => true,
                 'is_published' => true,
-                'published_at' => Carbon::now()->subDays(2),
+                'published_at' => Carbon::parse('2000-07-30'),
             ],
             [
                 'title' => 'Office Closure for National Holiday',
@@ -25,7 +25,7 @@ class AnnouncementSeeder extends Seeder
                 'type' => 'warning',
                 'is_pinned' => false,
                 'is_published' => true,
-                'published_at' => Carbon::now()->subDay(),
+                'published_at' => Carbon::parse('2000-07-31'),
             ],
             [
                 'title' => 'Quarterly Performance Review Reminder',
@@ -33,7 +33,7 @@ class AnnouncementSeeder extends Seeder
                 'type' => 'info',
                 'is_pinned' => false,
                 'is_published' => true,
-                'published_at' => Carbon::now(),
+                'published_at' => Carbon::parse('2000-08-01'),
             ],
         ];
 
