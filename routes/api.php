@@ -99,8 +99,8 @@ Route::name('api.')->prefix('v1')->group(function () {
         Route::apiResource('recruitment/candidates', App\Http\Controllers\Api\V1\RecruitmentController::class);
 
         // Performance
-        Route::post('performance/cycles/{id}/launch', [App\Http\Controllers\Api\V1\PerformanceController::class, 'launchCycle']);
-        Route::post('performance/reviews/{id}/submit', [App\Http\Controllers\Api\V1\PerformanceController::class, 'submitReview']);
+        Route::post('performance/cycles/{id}/launch', [App\Http\Controllers\Api\V1\PerformanceController::class, 'launchCycle'])->name('performance.cycles.launch');
+        Route::post('performance/reviews/{id}/submit', [App\Http\Controllers\Api\V1\PerformanceController::class, 'submitReview'])->name('performance.reviews.submit');
         Route::apiResource('performance/cycles', App\Http\Controllers\Api\V1\PerformanceController::class);
         Route::apiResource('performance/reviews', App\Http\Controllers\Api\V1\PerformanceController::class);
         Route::apiResource('performance/goals', App\Http\Controllers\Api\V1\GoalController::class);

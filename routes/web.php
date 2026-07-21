@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\LeaveController;
 use App\Http\Controllers\Web\PayrollController;
+use App\Http\Controllers\Web\PerformanceController as WebPerformanceController;
 use App\Http\Controllers\Web\RecruitmentController;
 use App\Models\Department;
 use App\Models\Position;
@@ -69,9 +70,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/recruitment/{id}', [RecruitmentController::class, 'show'])->name('recruitment.show');
 
     // Performance routes
-    Route::get('/performance', function () {
-        return Inertia::render('Performance/Index');
-    })->name('performance.index');
+    Route::get('/performance', [WebPerformanceController::class, 'index'])->name('performance.index');
+    Route::get('/performance/{id}', [WebPerformanceController::class, 'show'])->name('performance.show');
 
     // Announcement routes
     Route::get('/announcements', function () {
