@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->group(function () {
+Route::name('api.')->prefix('v1')->group(function () {
 
     // Health check
     Route::get('health', fn() => response()->json(['status' => 'ok', 'timestamp' => now()]));

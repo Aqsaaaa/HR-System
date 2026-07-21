@@ -26,7 +26,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $departments = Department::orderBy('name')->get();
-        $positions = Position::orderBy('name')->get();
+        $positions = Position::orderBy('title')->get();
         return Inertia::render('Employees/Create', [
             'departments' => $departments,
             'positions' => $positions,
@@ -45,7 +45,7 @@ class EmployeeController extends Controller
     {
         $employee = $this->employeeService->find($id);
         $departments = Department::orderBy('name')->get();
-        $positions = Position::orderBy('name')->get();
+        $positions = Position::orderBy('title')->get();
         return Inertia::render('Employees/Edit', [
             'employee' => $employee,
             'departments' => $departments,
