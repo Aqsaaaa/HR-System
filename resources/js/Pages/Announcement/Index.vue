@@ -108,25 +108,19 @@ function typeClass(type) {
 
 function createAnnouncement() {
   creating.value = true
-  fetch(route('api.announcements.store'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-    credentials: 'include',
-    body: JSON.stringify(form.value),
-  }).then(() => {
-    showCreate.value = false
-    form.value = { title: '', content: '', type: 'info', is_published: false }
-    router.reload({ preserveScroll: true })
-  }).finally(() => { creating.value = false })
+  router.post(route('announcements.store'), form.value, {
+    preserveScroll: true,
+    onSuccess: () => {
+      showCreate.value = false
+      form.value = { title: '', content: '', type: 'info', is_published: false }
+    },
+    onFinish: () => { creating.value = false },
+  })
 }
 
 function togglePin(announcement) {
-  fetch(route('api.announcements.pin', announcement.id), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-    credentials: 'include',
-  }).then(() => {
-    router.reload({ preserveScroll: true })
+  router.post(route('announcements.pin', announcement.id), {}, {
+    preserveScroll: true,
   })
 }
 </script>

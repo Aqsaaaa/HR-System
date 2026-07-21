@@ -76,6 +76,8 @@ Route::middleware('auth')->group(function () {
 
     // Announcement routes
     Route::get('/announcements', [WebAnnouncementController::class, 'index'])->name('announcements.index');
+    Route::post('/announcements', [WebAnnouncementController::class, 'store'])->name('announcements.store');
+    Route::post('/announcements/{id}/pin', [WebAnnouncementController::class, 'togglePin'])->name('announcements.pin');
 
     // Settings routes
     Route::get('/settings', function () {
