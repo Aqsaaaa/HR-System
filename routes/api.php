@@ -76,25 +76,25 @@ Route::name('api.')->prefix('v1')->group(function () {
         Route::apiResource('leave-requests', App\Http\Controllers\Api\V1\LeaveRequestController::class);
 
         // Payroll
-        Route::post('payroll/runs/{id}/process', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'process']);
-        Route::post('payroll/runs/{id}/complete', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'complete']);
-        Route::post('payroll/runs/{id}/cancel', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'cancel']);
-        Route::get('payroll/runs/{id}/preview', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'preview']);
-        Route::get('payroll/runs/{id}/payslips', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'payslips']);
-        Route::get('payroll/payslips', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'myPayslips']);
-        Route::get('payroll/payslips/{id}', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'payslipDetail']);
-        Route::get('payroll/payslips/{id}/download', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'downloadPayslip']);
-        Route::get('payroll/report', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'report']);
-        Route::post('payroll/adjustments', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'createAdjustment']);
-        Route::get('payroll/export/journal', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'exportJournal']);
+        Route::post('payroll/runs/{id}/process', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'process'])->name('payroll.runs.process');
+        Route::post('payroll/runs/{id}/complete', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'complete'])->name('payroll.runs.complete');
+        Route::post('payroll/runs/{id}/cancel', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'cancel'])->name('payroll.runs.cancel');
+        Route::get('payroll/runs/{id}/preview', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'preview'])->name('payroll.runs.preview');
+        Route::get('payroll/runs/{id}/payslips', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'payslips'])->name('payroll.runs.payslips');
+        Route::get('payroll/payslips', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'myPayslips'])->name('payroll.payslips');
+        Route::get('payroll/payslips/{id}', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'payslipDetail'])->name('payroll.payslips.detail');
+        Route::get('payroll/payslips/{id}/download', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'downloadPayslip'])->name('payroll.payslips.download');
+        Route::get('payroll/report', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'report'])->name('payroll.report');
+        Route::post('payroll/adjustments', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'createAdjustment'])->name('payroll.adjustments');
+        Route::get('payroll/export/journal', [App\Http\Controllers\Api\V1\PayrollRunController::class, 'exportJournal'])->name('payroll.export.journal');
         Route::apiResource('payroll/components', App\Http\Controllers\Api\V1\PayrollComponentController::class);
         Route::apiResource('payroll/runs', App\Http\Controllers\Api\V1\PayrollRunController::class);
 
         // Recruitment
-        Route::post('recruitment/candidates/{id}/stage', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'moveStage']);
-        Route::post('recruitment/candidates/{id}/offer', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'sendOffer']);
-        Route::get('recruitment/pipeline', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'pipeline']);
-        Route::get('recruitment/jobs/{id}/applications', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'applications']);
+        Route::post('recruitment/candidates/{id}/stage', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'moveStage'])->name('recruitment.candidates.stage');
+        Route::post('recruitment/candidates/{id}/offer', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'sendOffer'])->name('recruitment.candidates.offer');
+        Route::get('recruitment/pipeline', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'pipeline'])->name('recruitment.pipeline');
+        Route::get('recruitment/jobs/{id}/applications', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'applications'])->name('recruitment.jobs.applications');
         Route::apiResource('recruitment/jobs', App\Http\Controllers\Api\V1\RecruitmentController::class);
         Route::apiResource('recruitment/candidates', App\Http\Controllers\Api\V1\RecruitmentController::class);
 
