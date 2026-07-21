@@ -90,6 +90,7 @@ import {
   Cog6ToothIcon,
   DocumentTextIcon,
   ChartBarIcon,
+  ClipboardDocumentListIcon,
 } from '@heroicons/vue/24/outline'
 
 const page = usePage()
@@ -112,6 +113,7 @@ const navigation = [
   { name: 'Reports', href: '/reports', icon: DocumentTextIcon },
   { name: 'Analytics', href: '/analytics', icon: ChartBarIcon },
   { name: 'Notifications', href: '/notifications', icon: BellIcon },
+  { name: 'Audit Log', href: '/audit-logs', icon: ClipboardDocumentListIcon },
   { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ]
 

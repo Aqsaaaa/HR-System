@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\AnalyticsController as WebAnalyticsController;
 use App\Http\Controllers\Web\AnnouncementController as WebAnnouncementController;
 use App\Http\Controllers\Web\AttendanceController;
+use App\Http\Controllers\Web\AuditLogController as WebAuditLogController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\LeaveController;
@@ -96,6 +97,9 @@ Route::middleware('auth')->group(function () {
 
     // Analytics routes
     Route::get('/analytics', [WebAnalyticsController::class, 'index'])->name('analytics.index');
+
+    // Audit Log routes
+    Route::get('/audit-logs', [WebAuditLogController::class, 'index'])->name('audit-logs.index');
 
     // Notifications routes
     Route::get('/notifications', [WebNotificationController::class, 'index'])->name('notifications.index');
