@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\LeaveController;
+use App\Http\Controllers\Web\NotificationController as WebNotificationController;
 use App\Http\Controllers\Web\PayrollController;
 use App\Http\Controllers\Web\PerformanceController as WebPerformanceController;
 use App\Http\Controllers\Web\RecruitmentController;
@@ -97,7 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/analytics', [WebAnalyticsController::class, 'index'])->name('analytics.index');
 
     // Notifications routes
-    Route::get('/notifications', function () {
-        return Inertia::render('Notifications/Index');
-    })->name('notifications.index');
+    Route::get('/notifications', [WebNotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [WebNotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [WebNotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
 });
