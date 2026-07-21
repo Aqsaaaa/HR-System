@@ -20,7 +20,7 @@
               {{ cycle.status }}
             </span>
           </div>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">{{ cycle.start_date }} - {{ cycle.end_date }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">{{ formatDate(cycle.start_date) }} - {{ formatDate(cycle.end_date) }}</p>
           <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>{{ cycle.reviews_count || 0 }} reviews</span>
             <Link :href="route('performance.show', cycle.id)" class="text-blue-600 hover:text-blue-800 dark:text-blue-400">View</Link>
@@ -78,6 +78,7 @@
 import { ref } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { PlusIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({

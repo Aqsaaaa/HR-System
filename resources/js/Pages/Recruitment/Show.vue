@@ -65,7 +65,7 @@
                     {{ app.stage }}
                   </span>
                 </td>
-                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ app.applied_at }}</td>
+                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ formatDate(app.applied_at) }}</td>
                 <td class="px-4 py-3">
                   <button @click="openStageModal(app)" v-if="app.stage === 'applied' || app.stage === 'screening'"
                     class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 mr-3">Interview</button>
@@ -124,6 +124,7 @@
 import { ref } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({

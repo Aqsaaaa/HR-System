@@ -16,7 +16,7 @@
           <div class="flex-1 min-w-0">
             <h3 class="text-sm font-medium text-gray-900 dark:text-white">{{ n.data.title || n.data.message || 'Notification' }}</h3>
             <p v-if="n.data.message" class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ n.data.message }}</p>
-            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ timeAgo(n.created_at) }}</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ formatDate(n.created_at, 'd M Y H:i') }}</p>
           </div>
           <button v-if="!n.read_at" @click="markAsRead(n.id)"
             class="text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 whitespace-nowrap shrink-0">
@@ -35,22 +35,12 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 
 const props = defineProps({
   notifications: { type: Object, required: true },
   unread_count: { type: Number, required: true },
 })
-
-function timeAgo(date) {
-  const diff = Date.now() - new Date(date).getTime()
-  const mins = Math.floor(diff / 60000)
-  if (mins < 1) return 'just now'
-  if (mins < 60) return mins + 'm ago'
-  const hrs = Math.floor(mins / 60)
-  if (hrs < 24) return hrs + 'h ago'
-  const days = Math.floor(hrs / 24)
-  return days + 'd ago'
-}
 
 function markAsRead(id) {
   router.post(route('notifications.read', id))

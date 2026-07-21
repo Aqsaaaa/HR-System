@@ -7,7 +7,7 @@
         </Link>
         <div>
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ run.name }}</h1>
-          <p class="text-sm text-gray-500 dark:text-gray-400">{{ run.period_start }} - {{ run.period_end }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">{{ formatDate(run.period_start) }} - {{ formatDate(run.period_end) }}</p>
         </div>
         <span class="inline-flex px-3 py-1 text-sm font-medium rounded-full" :class="statusClass(run.status)">
           {{ run.status }}
@@ -78,6 +78,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({

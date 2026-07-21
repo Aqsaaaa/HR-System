@@ -10,12 +10,12 @@
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Today</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ currentDate }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ formatDate(new Date(), 'l, d F Y') }}</p>
           </div>
           <div class="flex items-center gap-4">
             <div v-if="today && today.clock_in && !today.clock_out" class="text-right">
               <p class="text-sm text-gray-500 dark:text-gray-400">Clocked in at</p>
-              <p class="text-lg font-semibold text-green-600 dark:text-green-400">{{ formatTime(today.clock_in) }}</p>
+              <p class="text-lg font-semibold text-green-600 dark:text-green-400">{{ formatDate(today.clock_in, 'H:i') }}</p>
             </div>
             <div v-if="today && today.clock_out" class="text-right">
               <p class="text-sm text-gray-500 dark:text-gray-400">Total hours</p>
@@ -46,8 +46,8 @@
               {{ today.status }}
             </span>
             <span class="text-gray-500 dark:text-gray-400">{{ today.type }}</span>
-            <span v-if="today.clock_in" class="text-gray-500 dark:text-gray-400">In: {{ formatTime(today.clock_in) }}</span>
-            <span v-if="today.clock_out" class="text-gray-500 dark:text-gray-400">Out: {{ formatTime(today.clock_out) }}</span>
+            <span v-if="today.clock_in" class="text-gray-500 dark:text-gray-400">In: {{ formatDate(today.clock_in, 'H:i') }}</span>
+            <span v-if="today.clock_out" class="text-gray-500 dark:text-gray-400">Out: {{ formatDate(today.clock_out, 'H:i') }}</span>
           </div>
         </div>
         <div v-else class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
@@ -74,9 +74,9 @@
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
               <tr v-for="att in attendances.data" :key="att.id" class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">{{ att.date }}</td>
-                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatTime(att.clock_in) || '-' }}</td>
-                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatTime(att.clock_out) || '-' }}</td>
+                <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">{{ formatDate(att.date) }}</td>
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatDate(att.clock_in, 'H:i') || '-' }}</td>
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatDate(att.clock_out, 'H:i') || '-' }}</td>
                 <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ att.total_hours ? att.total_hours + 'h' : '-' }}</td>
                 <td class="px-4 py-3">
                   <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full" :class="statusClass(att.status)">
@@ -97,9 +97,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { ArrowRightOnRectangleIcon, ArrowLeftOnRectangleIcon, CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
@@ -109,18 +110,6 @@ const props = defineProps({
 
 const clockingIn = ref(false)
 const clockingOut = ref(false)
-
-const currentDate = computed(() => {
-  return new Date().toLocaleDateString('en-US', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-  })
-})
-
-function formatTime(dt) {
-  if (!dt) return null
-  const d = new Date(dt)
-  return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-}
 
 function clockIn() {
   clockingIn.value = true

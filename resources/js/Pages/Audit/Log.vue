@@ -47,7 +47,7 @@
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
               <tr v-for="log in logs.data" :key="log.id" class="hover:bg-gray-50 dark:hover:bg-gray-800/30">
-                <td class="px-4 py-3 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ timeAgo(log.created_at) }}</td>
+                <td class="px-4 py-3 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ formatDate(log.created_at, 'd M Y H:i') }}</td>
                 <td class="px-4 py-3 text-gray-900 dark:text-white whitespace-nowrap">{{ log.user_name || '-' }}</td>
                 <td class="px-4 py-3">
                   <span class="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 capitalize">{{ log.module }}</span>
@@ -84,6 +84,7 @@
 import { reactive } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 
 const props = defineProps({
   logs: { type: Object, required: true },
@@ -107,16 +108,6 @@ function clearFilters() {
   filters.action = ''
   filters.search = ''
   router.get(route('audit-logs.index'), {}, { preserveState: true })
-}
-
-function timeAgo(date) {
-  const diff = Date.now() - new Date(date).getTime()
-  const mins = Math.floor(diff / 60000)
-  if (mins < 1) return 'just now'
-  if (mins < 60) return mins + 'm ago'
-  const hrs = Math.floor(mins / 60)
-  if (hrs < 24) return hrs + 'h ago'
-  return Math.floor(hrs / 24) + 'd ago'
 }
 
 function actionBadge(action) {

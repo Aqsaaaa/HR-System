@@ -7,7 +7,7 @@
         </Link>
         <div>
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ cycle.name }}</h1>
-          <p class="text-sm text-gray-500 dark:text-gray-400">{{ cycle.start_date }} - {{ cycle.end_date }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">{{ formatDate(cycle.start_date) }} - {{ formatDate(cycle.end_date) }}</p>
         </div>
         <span class="inline-flex px-3 py-1 text-sm font-medium rounded-full" :class="statusClass(cycle.status)">
           {{ cycle.status }}
@@ -55,7 +55,7 @@
                     {{ goal.status }}
                   </span>
                 </td>
-                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ goal.due_date }}</td>
+                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ formatDate(goal.due_date) }}</td>
               </tr>
               <tr v-if="!cycle.goals?.length">
                 <td colspan="5" class="px-4 py-12 text-center text-gray-500 dark:text-gray-400">No goals</td>
@@ -91,7 +91,7 @@
                     {{ review.status }}
                   </span>
                 </td>
-                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ review.submitted_at || '-' }}</td>
+                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ formatDate(review.submitted_at) || '-' }}</td>
               </tr>
               <tr v-if="!cycle.reviews?.length">
                 <td colspan="4" class="px-4 py-12 text-center text-gray-500 dark:text-gray-400">No reviews</td>
@@ -107,6 +107,7 @@
 <script setup>
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({

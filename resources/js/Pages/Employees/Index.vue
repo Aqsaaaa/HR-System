@@ -71,7 +71,7 @@
                     {{ emp.employment_status }}
                   </span>
                 </td>
-                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ emp.hire_date }}</td>
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatDate(emp.hire_date) }}</td>
                 <td class="px-4 py-3 text-right">
                   <div class="flex items-center justify-end gap-2">
                     <Link :href="route('employees.show', emp.id)"
@@ -142,6 +142,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { PlusIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({

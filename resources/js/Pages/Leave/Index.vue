@@ -55,14 +55,14 @@
                     <span class="text-sm text-gray-700 dark:text-gray-300">{{ lr.leave_type?.name }}</span>
                   </div>
                 </td>
-                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ lr.start_date }} - {{ lr.end_date }}</td>
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatDate(lr.start_date) }} - {{ formatDate(lr.end_date) }}</td>
                 <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ lr.total_days }}</td>
                 <td class="px-4 py-3">
                   <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full" :class="statusClass(lr.status)">
                     {{ lr.status }}
                   </span>
                 </td>
-                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ lr.applied_on }}</td>
+                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ formatDate(lr.applied_on) }}</td>
               </tr>
               <tr v-if="!leaveRequests.data?.length">
                 <td colspan="6" class="px-4 py-12 text-center text-gray-500 dark:text-gray-400">No leave requests</td>
@@ -78,6 +78,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { PlusIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({

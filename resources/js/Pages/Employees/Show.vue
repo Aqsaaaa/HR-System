@@ -45,7 +45,7 @@
             </div>
             <div>
               <dt class="text-xs text-gray-500 dark:text-gray-400 uppercase">Date of Birth</dt>
-              <dd class="text-sm text-gray-900 dark:text-white">{{ employee.date_of_birth || '-' }}</dd>
+              <dd class="text-sm text-gray-900 dark:text-white">{{ formatDate(employee.date_of_birth) || '-' }}</dd>
             </div>
             <div>
               <dt class="text-xs text-gray-500 dark:text-gray-400 uppercase">Marital Status</dt>
@@ -103,11 +103,11 @@
             </div>
             <div>
               <dt class="text-xs text-gray-500 dark:text-gray-400 uppercase">Hire Date</dt>
-              <dd class="text-sm text-gray-900 dark:text-white">{{ employee.hire_date }}</dd>
+              <dd class="text-sm text-gray-900 dark:text-white">{{ formatDate(employee.hire_date) }}</dd>
             </div>
             <div>
               <dt class="text-xs text-gray-500 dark:text-gray-400 uppercase">Probation End</dt>
-              <dd class="text-sm text-gray-900 dark:text-white">{{ employee.probation_end_date || '-' }}</dd>
+              <dd class="text-sm text-gray-900 dark:text-white">{{ formatDate(employee.probation_end_date) || '-' }}</dd>
             </div>
           </dl>
         </div>
@@ -119,6 +119,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { ArrowLeftIcon, PencilIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({

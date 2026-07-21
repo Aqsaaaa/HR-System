@@ -97,7 +97,7 @@
             <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
               <tr v-for="run in runs.data" :key="run.id" class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
                 <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">{{ run.name }}</td>
-                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ run.period_start }} - {{ run.period_end }}</td>
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatDate(run.period_start) }} - {{ formatDate(run.period_end) }}</td>
                 <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ run.total_employees }}</td>
                 <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{{ formatCurrency(run.total_net) }}</td>
                 <td class="px-4 py-3">
@@ -175,6 +175,7 @@
 import { ref, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import { formatDate } from '@/utils/date'
 import { PlusIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
@@ -189,14 +190,14 @@ const showCreateRun = ref(false)
 const creating = ref(false)
 const form = ref({
   name: '',
-  month: new Date().getMonth() + 1,
-  year: new Date().getFullYear(),
+  month: 8,
+  year: 2000,
   period_start: '',
   period_end: '',
 })
 
 function monthName(m) {
-  return new Date(2000, m - 1, 1).toLocaleString('default', { month: 'long' })
+  return formatDate(new Date(2000, m - 1, 1), 'F')
 }
 
 function formatCurrency(val) {
@@ -220,7 +221,7 @@ function createRun() {
     preserveState: true,
     onSuccess: () => {
       showCreateRun.value = false
-      form.value = { name: '', month: new Date().getMonth() + 1, year: new Date().getFullYear(), period_start: '', period_end: '' }
+      form.value = { name: '', month: 8, year: 2000, period_start: '', period_end: '' }
     },
     onFinish: () => { creating.value = false },
   })
