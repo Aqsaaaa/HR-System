@@ -15,8 +15,9 @@ return new class extends Migration
         });
 
         Schema::table('roles', function (Blueprint $table) {
+            $table->string('description')->nullable()->after('name');
             $table->string('display_name')->nullable()->after('name');
-            $table->boolean('is_system')->default(false)->after('description');
+            $table->boolean('is_system')->default(false);
         });
     }
 
