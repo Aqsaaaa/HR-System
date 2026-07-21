@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Web\EmployeeController;
+use App\Models\Department;
+use App\Models\Position;
+use App\Services\Employee\EmployeeService;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -30,18 +34,10 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     // Employee routes
-    Route::get('/employees', function () {
-        return Inertia::render('Employees/Index');
-    })->name('employees.index');
-    Route::get('/employees/create', function () {
-        return Inertia::render('Employees/Create');
-    })->name('employees.create');
-    Route::get('/employees/{id}', function ($id) {
-        return Inertia::render('Employees/Show', ['id' => $id]);
-    })->name('employees.show');
-    Route::get('/employees/{id}/edit', function ($id) {
-        return Inertia::render('Employees/Edit', ['id' => $id]);
-    })->name('employees.edit');
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+    Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
+    Route::get('/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
 
     // Department routes
     Route::get('/departments', function () {
