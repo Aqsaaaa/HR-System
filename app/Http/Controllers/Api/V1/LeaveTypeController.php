@@ -2,32 +2,46 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\Leave\StoreLeaveTypeRequest;
+use App\Http\Requests\Leave\UpdateLeaveTypeRequest;
+use App\Http\Resources\Leave\LeaveTypeResource;
+use App\Services\Leave\LeaveTypeService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class LeaveTypeController extends BaseController
 {
-    public function index(): JsonResponse
+    public function __construct(
+        private LeaveTypeService $leaveTypeService
+    ) {}
+
+    public function index(Request $request): JsonResponse
     {
-        return $this->success([]);
+        $leaveTypes = $this->leaveTypeService->getAll($request->all());
+        return $this->paginated($leaveTypes, LeaveTypeResource::class);
     }
 
-    public function store(): JsonResponse
+    public function store(StoreLeaveTypeRequest $request): JsonResponse
     {
-        return $this->success([], 'Created', 201);
+        $leaveType = $this->leaveTypeService->create($request->validated());
+        return $this->created(new LeaveTypeResource($leaveType), 'Leave type created');
     }
 
-    public function show($id): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        return $this->success([]);
+        $leaveType = $this->leaveTypeService->find($id);
+        return $this->success(new LeaveTypeResource($leaveType));
     }
 
-    public function update($id): JsonResponse
+    public function update(UpdateLeaveTypeRequest $request, int $id): JsonResponse
     {
-        return $this->success([]);
+        $leaveType = $this->leaveTypeService->update($id, $request->validated());
+        return $this->success(new LeaveTypeResource($leaveType), 'Leave type updated');
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
+        $this->leaveTypeService->delete($id);
         return $this->noContent();
     }
 }
