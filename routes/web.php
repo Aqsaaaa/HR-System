@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AnalyticsController as WebAnalyticsController;
 use App\Http\Controllers\Web\AnnouncementController as WebAnnouncementController;
 use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\DashboardController;
@@ -92,9 +93,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports', [WebReportController::class, 'index'])->name('reports.index');
 
     // Analytics routes
-    Route::get('/analytics', function () {
-        return Inertia::render('Analytics/Index');
-    })->name('analytics.index');
+    Route::get('/analytics', [WebAnalyticsController::class, 'index'])->name('analytics.index');
 
     // Notifications routes
     Route::get('/notifications', function () {
