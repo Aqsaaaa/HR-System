@@ -5,11 +5,13 @@ use App\Http\Controllers\Web\AnnouncementController as WebAnnouncementController
 use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\AuditLogController as WebAuditLogController;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\DepartmentController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\LeaveController;
 use App\Http\Controllers\Web\NotificationController as WebNotificationController;
 use App\Http\Controllers\Web\PayrollController;
 use App\Http\Controllers\Web\PerformanceController as WebPerformanceController;
+use App\Http\Controllers\Web\PositionController;
 use App\Http\Controllers\Web\RecruitmentController;
 use App\Http\Controllers\Web\ReportController as WebReportController;
 use App\Http\Controllers\Web\SettingsController as WebSettingsController;
@@ -50,14 +52,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
 
     // Department routes
-    Route::get('/departments', function () {
-        return Inertia::render('Departments/Index');
-    })->name('departments.index');
+    Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
+    Route::post('/departments/{id}', [DepartmentController::class, 'update'])->name('departments.update');
+    Route::delete('/departments/{id}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
 
     // Position routes
-    Route::get('/positions', function () {
-        return Inertia::render('Positions/Index');
-    })->name('positions.index');
+    Route::get('/positions', [PositionController::class, 'index'])->name('positions.index');
+    Route::post('/positions', [PositionController::class, 'store'])->name('positions.store');
+    Route::post('/positions/{id}', [PositionController::class, 'update'])->name('positions.update');
+    Route::delete('/positions/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
 
     // Attendance routes
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
