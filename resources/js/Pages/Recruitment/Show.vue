@@ -171,6 +171,7 @@ function updateStage() {
   fetch(route('api.recruitment.candidates.stage', selectedApp.value.candidate_id), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+    credentials: 'include',
     body: JSON.stringify(stageForm.value),
   }).then(() => {
     selectedApp.value = null

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AnnouncementController as WebAnnouncementController;
 use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\LeaveController;
@@ -74,9 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/performance/{id}', [WebPerformanceController::class, 'show'])->name('performance.show');
 
     // Announcement routes
-    Route::get('/announcements', function () {
-        return Inertia::render('Announcement/Index');
-    })->name('announcements.index');
+    Route::get('/announcements', [WebAnnouncementController::class, 'index'])->name('announcements.index');
 
     // Settings routes
     Route::get('/settings', function () {

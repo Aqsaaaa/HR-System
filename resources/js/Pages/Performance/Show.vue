@@ -157,6 +157,7 @@ function launchCycle() {
   fetch(route('api.performance.cycles.launch', props.cycle.id), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+    credentials: 'include',
   }).then(() => {
     router.reload({ preserveScroll: true })
   })

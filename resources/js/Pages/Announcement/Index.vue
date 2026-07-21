@@ -111,6 +111,7 @@ function createAnnouncement() {
   fetch(route('api.announcements.store'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+    credentials: 'include',
     body: JSON.stringify(form.value),
   }).then(() => {
     showCreate.value = false
@@ -122,7 +123,8 @@ function createAnnouncement() {
 function togglePin(announcement) {
   fetch(route('api.announcements.pin', announcement.id), {
     method: 'POST',
-    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+    credentials: 'include',
   }).then(() => {
     router.reload({ preserveScroll: true })
   })

@@ -104,6 +104,7 @@ function createCycle() {
   fetch(route('api.cycles.store'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+    credentials: 'include',
     body: JSON.stringify(form.value),
   }).then(() => {
     showCreate.value = false
