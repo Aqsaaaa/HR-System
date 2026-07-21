@@ -67,10 +67,12 @@
                 </td>
                 <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{{ app.applied_at }}</td>
                 <td class="px-4 py-3">
-                  <button @click="moveStage(app.candidate_id, 'interview')" v-if="app.stage === 'applied'"
+                  <button @click="openStageModal(app)" v-if="app.stage === 'applied' || app.stage === 'screening'"
                     class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 mr-3">Interview</button>
-                  <button @click="sendOffer(app.candidate_id)" v-if="app.stage === 'interview'"
-                    class="text-xs text-green-600 hover:text-green-800 dark:text-green-400">Offer</button>
+                  <button @click="openStageModal(app)" v-if="app.stage === 'interview'"
+                    class="text-xs text-green-600 hover:text-green-800 dark:text-green-400 mr-3">Offer</button>
+                  <button @click="openStageModal(app)" v-if="app.stage !== 'hired' && app.stage !== 'rejected'"
+                    class="text-xs text-red-600 hover:text-red-800 dark:text-red-400">Reject</button>
                 </td>
               </tr>
               <tr v-if="!job.applications?.length">
@@ -80,11 +82,46 @@
           </table>
         </div>
       </div>
+
+      <!-- Stage Modal -->
+      <div v-if="selectedApp" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" @click.self="selectedApp = null">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 w-full max-w-md mx-4 p-6">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Update Stage</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">{{ selectedApp.candidate?.first_name }} {{ selectedApp.candidate?.last_name }}</p>
+          <form @submit.prevent="updateStage" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Stage</label>
+              <select v-model="stageForm.stage" required
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+                <option value="screening">Screening</option>
+                <option value="interview">Interview</option>
+                <option value="offer">Offer</option>
+                <option value="hired">Hired</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
+              <textarea v-model="stageForm.notes" rows="3"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"></textarea>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button type="button" @click="selectedApp = null"
+                class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Cancel</button>
+              <button type="submit" :disabled="submitting"
+                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50">
+                {{ submitting ? 'Updating...' : 'Update' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </AppLayout>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
@@ -92,6 +129,16 @@ import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   job: { type: Object, required: true },
 })
+
+const selectedApp = ref(null)
+const submitting = ref(false)
+const stageForm = ref({ stage: 'screening', notes: '' })
+
+function openStageModal(app) {
+  const nextStages = { applied: 'screening', screening: 'interview', interview: 'offer', offer: 'hired' }
+  stageForm.value = { stage: nextStages[app.stage] || app.stage, notes: '' }
+  selectedApp.value = app
+}
 
 function formatCurrency(val) {
   if (!val && val !== 0) return '-'
@@ -119,15 +166,15 @@ function stageClass(stage) {
   return map[stage] || 'bg-gray-100 text-gray-700'
 }
 
-function moveStage(candidateId, stage) {
-  router.post(route('api.recruitment.candidates.stage', candidateId), { stage }, {
-    preserveScroll: true,
-  })
-}
-
-function sendOffer(candidateId) {
-  router.post(route('api.recruitment.candidates.offer', candidateId), {}, {
-    preserveScroll: true,
-  })
+function updateStage() {
+  submitting.value = true
+  fetch(route('api.recruitment.candidates.stage', selectedApp.value.candidate_id), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+    body: JSON.stringify(stageForm.value),
+  }).then(() => {
+    selectedApp.value = null
+    router.reload({ preserveScroll: true })
+  }).finally(() => { submitting.value = false })
 }
 </script>
