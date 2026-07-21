@@ -13,6 +13,21 @@ class JobPostingRepository extends BaseRepository implements JobPostingRepositor
         parent::__construct($model);
     }
 
+    public function paginate(int $perPage = 15, array $filters = []): LengthAwarePaginator
+    {
+        $query = $this->model->withCount('applications');
+
+        if (!empty($filters)) {
+            $this->applyFilters($query, $filters);
+        }
+
+        $sort = $filters['sort'] ?? 'created_at';
+        $direction = $filters['direction'] ?? 'desc';
+
+        return $query->orderBy($sort, $direction)
+            ->paginate($filters['per_page'] ?? $perPage);
+    }
+
     public function getPublished(): LengthAwarePaginator
     {
         return $this->model->where('status', 'published')

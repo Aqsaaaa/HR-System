@@ -18,7 +18,7 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-4">
           <span class="text-xs text-gray-500 dark:text-gray-400">Applicants</span>
-          <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ job.applications_count || 0 }}</p>
+          <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ job.applications?.length || 0 }}</p>
         </div>
         <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-4">
           <span class="text-xs text-gray-500 dark:text-gray-400">Slots</span>
