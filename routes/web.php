@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\LeaveController;
 use App\Http\Controllers\Web\PayrollController;
 use App\Http\Controllers\Web\PerformanceController as WebPerformanceController;
 use App\Http\Controllers\Web\RecruitmentController;
+use App\Http\Controllers\Web\ReportController as WebReportController;
 use App\Models\Department;
 use App\Models\Position;
 use App\Services\Employee\EmployeeService;
@@ -89,9 +90,7 @@ Route::middleware('auth')->group(function () {
     })->name('settings.index');
 
     // Reports routes
-    Route::get('/reports', function () {
-        return Inertia::render('Reports/Index');
-    })->name('reports.index');
+    Route::get('/reports', [WebReportController::class, 'index'])->name('reports.index');
 
     // Analytics routes
     Route::get('/analytics', function () {
