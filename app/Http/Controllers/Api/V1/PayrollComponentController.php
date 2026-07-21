@@ -2,32 +2,46 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\Payroll\StorePayrollComponentRequest;
+use App\Http\Requests\Payroll\UpdatePayrollComponentRequest;
+use App\Http\Resources\Payroll\PayrollComponentResource;
+use App\Services\Payroll\PayrollComponentService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PayrollComponentController extends BaseController
 {
-    public function index(): JsonResponse
+    public function __construct(
+        private PayrollComponentService $componentService
+    ) {}
+
+    public function index(Request $request): JsonResponse
     {
-        return $this->success([]);
+        $components = $this->componentService->getAll($request->all());
+        return $this->paginated($components, PayrollComponentResource::class);
     }
 
-    public function store(): JsonResponse
+    public function store(StorePayrollComponentRequest $request): JsonResponse
     {
-        return $this->success([], 'Created', 201);
+        $component = $this->componentService->create($request->validated());
+        return $this->created(new PayrollComponentResource($component), 'Component created');
     }
 
-    public function show($id): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        return $this->success([]);
+        $component = $this->componentService->find($id);
+        return $this->success(new PayrollComponentResource($component));
     }
 
-    public function update($id): JsonResponse
+    public function update(UpdatePayrollComponentRequest $request, int $id): JsonResponse
     {
-        return $this->success([]);
+        $component = $this->componentService->update($id, $request->validated());
+        return $this->success(new PayrollComponentResource($component), 'Component updated');
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
+        $this->componentService->delete($id);
         return $this->noContent();
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\LeaveController;
+use App\Http\Controllers\Web\PayrollController;
 use App\Models\Department;
 use App\Models\Position;
 use App\Services\Employee\EmployeeService;
@@ -59,9 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/leave/create', [LeaveController::class, 'create'])->name('leave.create');
 
     // Payroll routes
-    Route::get('/payroll', function () {
-        return Inertia::render('Payroll/Index');
-    })->name('payroll.index');
+    Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.index');
 
     // Recruitment routes
     Route::get('/recruitment', function () {
