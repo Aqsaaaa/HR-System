@@ -37,4 +37,23 @@ class PerformanceController extends Controller
             'cycle' => $cycle,
         ]);
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'description' => 'nullable|string',
+        ]);
+
+        $this->cycleService->create($validated);
+        return redirect()->back();
+    }
+
+    public function launchCycle(int $id)
+    {
+        $this->cycleService->launch($id);
+        return redirect()->back();
+    }
 }

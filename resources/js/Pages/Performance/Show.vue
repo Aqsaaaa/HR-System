@@ -154,12 +154,8 @@ function ratingClass(val) {
 }
 
 function launchCycle() {
-  fetch(route('api.performance.cycles.launch', props.cycle.id), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-    credentials: 'include',
-  }).then(() => {
-    router.reload({ preserveScroll: true })
+  router.post(route('performance.launch', props.cycle.id), {}, {
+    preserveScroll: true,
   })
 }
 </script>

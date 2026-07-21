@@ -101,15 +101,13 @@ function statusClass(status) {
 
 function createCycle() {
   creating.value = true
-  fetch(route('api.cycles.store'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-    credentials: 'include',
-    body: JSON.stringify(form.value),
-  }).then(() => {
-    showCreate.value = false
-    form.value = { name: '', start_date: '', end_date: '', description: '' }
-    router.reload({ preserveScroll: true })
-  }).finally(() => { creating.value = false })
+  router.post(route('performance.store'), form.value, {
+    preserveScroll: true,
+    onSuccess: () => {
+      showCreate.value = false
+      form.value = { name: '', start_date: '', end_date: '', description: '' }
+    },
+    onFinish: () => { creating.value = false },
+  })
 }
 </script>

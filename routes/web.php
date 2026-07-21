@@ -69,10 +69,14 @@ Route::middleware('auth')->group(function () {
     // Recruitment routes
     Route::get('/recruitment', [RecruitmentController::class, 'index'])->name('recruitment.index');
     Route::get('/recruitment/{id}', [RecruitmentController::class, 'show'])->name('recruitment.show');
+    Route::post('/recruitment/candidates/{id}/stage', [RecruitmentController::class, 'moveStage'])->name('recruitment.candidates.stage');
+    Route::post('/recruitment/candidates/{id}/offer', [RecruitmentController::class, 'sendOffer'])->name('recruitment.candidates.offer');
 
     // Performance routes
     Route::get('/performance', [WebPerformanceController::class, 'index'])->name('performance.index');
+    Route::post('/performance', [WebPerformanceController::class, 'store'])->name('performance.store');
     Route::get('/performance/{id}', [WebPerformanceController::class, 'show'])->name('performance.show');
+    Route::post('/performance/{id}/launch', [WebPerformanceController::class, 'launchCycle'])->name('performance.launch');
 
     // Announcement routes
     Route::get('/announcements', [WebAnnouncementController::class, 'index'])->name('announcements.index');

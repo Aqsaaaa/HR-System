@@ -168,14 +168,10 @@ function stageClass(stage) {
 
 function updateStage() {
   submitting.value = true
-  fetch(route('api.recruitment.candidates.stage', selectedApp.value.candidate_id), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-    credentials: 'include',
-    body: JSON.stringify(stageForm.value),
-  }).then(() => {
-    selectedApp.value = null
-    router.reload({ preserveScroll: true })
-  }).finally(() => { submitting.value = false })
+  router.post(route('recruitment.candidates.stage', selectedApp.value.candidate_id), stageForm.value, {
+    preserveScroll: true,
+    onSuccess: () => { selectedApp.value = null },
+    onFinish: () => { submitting.value = false },
+  })
 }
 </script>

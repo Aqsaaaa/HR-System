@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Position;
-use App\Services\Recruitment\JobPostingService;
 use App\Services\Recruitment\CandidateService;
+use App\Services\Recruitment\JobPostingService;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RecruitmentController extends Controller
@@ -35,5 +36,18 @@ class RecruitmentController extends Controller
         return Inertia::render('Recruitment/Show', [
             'job' => $job,
         ]);
+    }
+
+    public function moveStage(Request $request, int $id)
+    {
+        $request->validate(['stage' => 'required|string', 'notes' => 'nullable|string']);
+        $this->candidateService->moveStage($id, $request->stage);
+        return redirect()->back();
+    }
+
+    public function sendOffer(int $id)
+    {
+        $this->candidateService->sendOffer($id);
+        return redirect()->back();
     }
 }
