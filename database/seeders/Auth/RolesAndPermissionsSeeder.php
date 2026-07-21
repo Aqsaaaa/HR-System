@@ -31,17 +31,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
         foreach ($modules as $module => $actions) {
             foreach ($actions as $action) {
-                Permission::create([
-                    'name' => "{$module}.{$action}",
-                    'guard_name' => 'web',
-                    'display_name' => ucwords(str_replace('.', ' ', "{$module} {$action}")),
-                    'module' => $module,
-                    'group_name' => ucfirst($module),
-                ]);
+                Permission::findOrCreate("{$module}.{$action}", 'web');
             }
         }
-
-        $permissions = Permission::pluck('name')->toArray();
 
         $roles = [
             'super-admin' => ['display_name' => 'Super Admin', 'is_system' => true, 'permissions' => Permission::pluck('name')->toArray()],
@@ -54,13 +46,12 @@ class RolesAndPermissionsSeeder extends Seeder
         ];
 
         foreach ($roles as $name => $config) {
-            $role = Role::create([
-                'name' => $name,
-                'guard_name' => 'web',
+            $role = Role::findOrCreate($name, 'web');
+            $role->update([
                 'display_name' => $config['display_name'],
                 'is_system' => $config['is_system'],
             ]);
-            $role->givePermissionTo($config['permissions']);
+            $role->syncPermissions($config['permissions']);
         }
 
         $this->command->info('Roles and permissions seeded successfully.');

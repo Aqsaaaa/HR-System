@@ -9,34 +9,37 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::create([
-            'name' => 'Super Admin',
-            'email' => 'admin@hris.local',
-            'password' => bcrypt('password'),
-            'is_active' => true,
-            'email_verified_at' => now(),
-        ]);
-
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@hris.local'],
+            [
+                'name' => 'Super Admin',
+                'password' => bcrypt('password'),
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]
+        );
         $admin->assignRole('super-admin');
 
-        $hr = User::create([
-            'name' => 'HR Manager',
-            'email' => 'hr@hris.local',
-            'password' => bcrypt('password'),
-            'is_active' => true,
-            'email_verified_at' => now(),
-        ]);
-
+        $hr = User::updateOrCreate(
+            ['email' => 'hr@hris.local'],
+            [
+                'name' => 'HR Manager',
+                'password' => bcrypt('password'),
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]
+        );
         $hr->assignRole('hr-manager');
 
-        $emp = User::create([
-            'name' => 'Employee User',
-            'email' => 'employee@hris.local',
-            'password' => bcrypt('password'),
-            'is_active' => true,
-            'email_verified_at' => now(),
-        ]);
-
+        $emp = User::updateOrCreate(
+            ['email' => 'employee@hris.local'],
+            [
+                'name' => 'Employee User',
+                'password' => bcrypt('password'),
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]
+        );
         $emp->assignRole('employee');
 
         $this->command->info('Default users created:');
