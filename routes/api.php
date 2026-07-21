@@ -94,6 +94,7 @@ Route::name('api.')->prefix('v1')->group(function () {
         Route::post('recruitment/candidates/{id}/stage', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'moveStage']);
         Route::post('recruitment/candidates/{id}/offer', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'sendOffer']);
         Route::get('recruitment/pipeline', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'pipeline']);
+        Route::get('recruitment/jobs/{id}/applications', [App\Http\Controllers\Api\V1\RecruitmentController::class, 'applications']);
         Route::apiResource('recruitment/jobs', App\Http\Controllers\Api\V1\RecruitmentController::class);
         Route::apiResource('recruitment/candidates', App\Http\Controllers\Api\V1\RecruitmentController::class);
 

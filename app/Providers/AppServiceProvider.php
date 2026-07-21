@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\AttendanceRepositoryInterface;
+use App\Repositories\Contracts\CandidateRepositoryInterface;
 use App\Repositories\Contracts\DepartmentRepositoryInterface;
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
+use App\Repositories\Contracts\JobPostingRepositoryInterface;
 use App\Repositories\Contracts\LeaveRequestRepositoryInterface;
 use App\Repositories\Contracts\LeaveTypeRepositoryInterface;
 use App\Repositories\Contracts\PayrollComponentRepositoryInterface;
@@ -13,8 +15,10 @@ use App\Repositories\Contracts\PositionRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\BaseRepository;
+use App\Repositories\CandidateRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\JobPostingRepository;
 use App\Repositories\LeaveRequestRepository;
 use App\Repositories\LeaveTypeRepository;
 use App\Repositories\PayrollComponentRepository;
@@ -35,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(LeaveRequestRepositoryInterface::class, LeaveRequestRepository::class);
         $this->app->bind(PayrollComponentRepositoryInterface::class, PayrollComponentRepository::class);
         $this->app->bind(PayrollRunRepositoryInterface::class, PayrollRunRepository::class);
+        $this->app->bind(JobPostingRepositoryInterface::class, JobPostingRepository::class);
+        $this->app->bind(CandidateRepositoryInterface::class, CandidateRepository::class);
     }
 
     public function boot(): void
