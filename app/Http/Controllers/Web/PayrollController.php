@@ -25,4 +25,15 @@ class PayrollController extends Controller
             'filters' => request()->all(),
         ]);
     }
+
+    public function show(int $id)
+    {
+        $run = $this->payrollRunService->find($id);
+        $payslips = $run->payslips()->with('employee')->paginate(20);
+
+        return Inertia::render('Payroll/Show', [
+            'run' => $run,
+            'payslips' => $payslips,
+        ]);
+    }
 }

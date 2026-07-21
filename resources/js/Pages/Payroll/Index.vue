@@ -233,6 +233,6 @@ function processRun(id) {
 }
 
 function viewPayslips(id) {
-  router.get(route('api.payroll.runs.payslips', id))
+  router.get(route('payroll.runs.show', id))
 }
 </script>

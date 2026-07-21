@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
 
     // Payroll routes
     Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.index');
+    Route::get('/payroll/runs/{id}', [PayrollController::class, 'show'])->name('payroll.runs.show');
 
     // Recruitment routes
     Route::get('/recruitment', function () {
